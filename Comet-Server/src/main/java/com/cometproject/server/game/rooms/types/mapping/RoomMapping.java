@@ -36,21 +36,16 @@ public class RoomMapping {
 
         this.tiles = new RoomTile[sizeX][sizeY];
 
-        //System.out.print("\n");
         for (int x = 0; x < sizeX; x++) {
             RoomTile[] xArray = new RoomTile[sizeY];
 
             for (int y = 0; y < sizeY; y++) {
                 RoomTile instance = new RoomTile(this, new Position(x, y, 0d));
                 instance.reload();
-
                 xArray[y] = instance;
-
-                //System.out.printf("[%s, %s] ", x, y);
             }
 
             this.tiles[x] = xArray;
-            //System.out.print("\n");
         }
     }
 
@@ -395,9 +390,6 @@ public class RoomMapping {
 
         for (int y = 0; y < this.tiles.length; y++) {
             for (int x = 0; x < this.tiles[y].length; x++) {
-//                if (this.tiles[y][x].getItems().size() != 0) {
-//                    builder.append("O");
-                /*} else */
                 if (this.tiles[y][x].getEntities().size() != 0) {
                     builder.append("E");
                 } else {

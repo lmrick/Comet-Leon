@@ -9,6 +9,7 @@ import com.cometproject.api.utilities.Initialisable;
 import com.cometproject.game.groups.GroupsModule;
 import com.cometproject.game.rooms.RoomsModule;
 import com.cometproject.gamecenter.fastfood.FastFoodModule;
+import com.cometproject.server.game.rooms.types.mapping.RoomTileListener;
 import com.cometproject.server.modules.events.EventHandlerService;
 import org.apache.log4j.Logger;
 
@@ -51,27 +52,14 @@ public class ModuleManager implements Initialisable {
         this.loadCoreModule(GroupsModule.class);
         this.loadCoreModule(FastFoodModule.class);
         this.loadCoreModule(RoomsModule.class);
-
-//        this.loadModules();
-
-//        for (String moduleName : this.findModules()) {
-//            try {
-//                this.loadModule(moduleName);
-//            } catch (Exception e) {
-//                log.warn("Error while loading module: " + moduleName, e);
-//            }
-//        }
+        this.loadCoreModule(RoomTileModule.class);
     }
 
     private void loadCoreModule(Class<? extends BaseModule> moduleClass) {
         try {
             Constructor<? extends BaseModule> ctor = moduleClass.getConstructor(ModuleConfig.class, IGameService.class);
-
-            // Null module config, it's a system module so no config needed.
             BaseModule cometModule = ctor.newInstance(null, this.gameService);
-
             cometModule.loadModule();
-
             this.modules.put(moduleClass.getSimpleName(), cometModule);
         } catch (Exception e) {
             log.error("Failed to load system module: " + moduleClass.getName(), e);
